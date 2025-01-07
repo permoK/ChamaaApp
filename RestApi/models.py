@@ -18,19 +18,20 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(mobile_number, password, **extra_fields)
 
 class CustomUser(AbstractUser):
-    name = models.CharField(max_length=255)
-    sacco_name = models.CharField(max_length=255)
+    username = None  # Remove the username field
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     phone_regex = RegexValidator(
         regex=r'^\+?1?\d{9,15}$',
         message="Phone number must be entered in format: '+999999999'"
     )
     mobile_number = models.CharField(validators=[phone_regex], max_length=17, unique=True)
-    username = None
-    
-    USERNAME_FIELD = 'mobile_number'
-    REQUIRED_FIELDS = ['name', 'sacco_name']
+
+    USERNAME_FIELD = 'mobile_number'  # Use mobile_number as the unique identifier
+    REQUIRED_FIELDS = []  # Specify other required fields if any
 
     objects = CustomUserManager()
 
     def __str__(self):
-        return f"{self.name} - {self.sacco_name}"
+        return f"{self.mobile_number}"
+
