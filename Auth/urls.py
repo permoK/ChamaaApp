@@ -18,6 +18,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('chamaa/admin/', admin.site.urls),
     path('chamaa/api/auth/', include("RestApi.urls")),
 ]
